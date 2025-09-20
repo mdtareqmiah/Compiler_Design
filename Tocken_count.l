@@ -18,8 +18,31 @@
 }
 
 [0-9]+(\.[0-9]+)? { 
-    printf("Constant: %s\n", yytext); cons++; 
+    printf("Constant (Number): %s\n", yytext); cons++; 
 }
+
+\'([^\'\n])\'{
+    printf("Constant (char): %s\n", yytext);
+    cons++;
+}
+\"([^\"\n]*\"){
+    printf("Constant(string): %s\n",yytext);
+    cons++;
+}
+
+(\+|\-|\*|/|=|==|!=|<=|>=|<|>|\+\+|\-\-) {
+    printf("Operator: %s\n",yytext); oprtor++;
+}
+
+[;,:\.] {
+    printf("Separator: %s\n", yytext);
+    sepra++;
+}
+
+[\(\)\{\}\[\]] {
+    printf("Special Char: %s\n", yytext); spchar++;
+}
+
 
 [ \t\n]+    ;
 .           ;
