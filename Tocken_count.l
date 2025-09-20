@@ -6,21 +6,32 @@
 
 %%
 
-"//".*                                                  ;
-"/*"([^*]|\*+[^*/])*"*/"                                ;
+"//".*  ;
+"/*"([^*]|\*+[^*/])*"*/"    ;
 
-("int"|"float"|"char"|"if"|"else"|"while"|"for"|"return"|"void"|"printf")      { printf("keyword: %s\n", yytext); keyw++; }
+("int"|"float"|"char"|"if"|"else"|"while"|"for"|"return"|"void"|"printf") { 
+    printf("keyword: %s\n", yytext); keyw++; 
+}
 
-[a-zA-Z_][a-zA-Z0-9_]*                                  { printf("identifier: %s\n", yytext); ident++; }
+[a-zA-Z_][a-zA-Z0-9_]* { 
+    printf("identifier: %s\n", yytext); ident++; 
+}
 
-[0-9]+(\.[0-9]+)?                                       { printf("Constant: %s\n", yytext); cons++; }
+[0-9]+(\.[0-9]+)? { 
+    printf("Constant: %s\n", yytext); cons++; 
+}
 
-[ \t\n]+                                                ;
-.                                                       ;
+[ \t\n]+    ;
+.           ;
 
 %%
 
 int main(){
+    yyin = fopen("lexer_in.c","r");
+    if(!yyin){
+        printf("File Not Found!\n");
+        return 1;
+    }
     yylex();
     printf("\n=== Token count Summary ===\n");
     printf("keyword:    = %d\n",keyw);

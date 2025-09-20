@@ -396,9 +396,9 @@ static char *yy_last_accepting_cpos;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "Tocken_count.l"
+#line 1 "tocken_count.l"
 #define INITIAL 0
-#line 2 "Tocken_count.l"
+#line 2 "tocken_count.l"
     #include<stdio.h>
     int keyw=0, ident=0, oprtot=0, sepra=0, spchr=0,cons=0;
 
@@ -553,7 +553,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 7 "Tocken_count.l"
+#line 7 "tocken_count.l"
 
 
 #line 560 "lex.yy.c"
@@ -641,45 +641,51 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "Tocken_count.l"
+#line 9 "tocken_count.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 10 "Tocken_count.l"
+#line 10 "tocken_count.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "Tocken_count.l"
-{ printf("keyword: %s\n", yytext); keyw++; }
+#line 12 "tocken_count.l"
+{ 
+    printf("keyword: %s\n", yytext); keyw++; 
+}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 14 "Tocken_count.l"
-{ printf("identifier: %s\n", yytext); ident++; }
+#line 16 "tocken_count.l"
+{ 
+    printf("identifier: %s\n", yytext); ident++; 
+}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "Tocken_count.l"
-{ printf("Constant: %s\n", yytext); cons++; }
+#line 20 "tocken_count.l"
+{ 
+    printf("Constant: %s\n", yytext); cons++; 
+}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "Tocken_count.l"
+#line 24 "tocken_count.l"
 ;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "Tocken_count.l"
+#line 25 "tocken_count.l"
 ;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "Tocken_count.l"
+#line 27 "tocken_count.l"
 ECHO;
 	YY_BREAK
-#line 683 "lex.yy.c"
+#line 689 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1565,10 +1571,15 @@ int main()
 	return 0;
 	}
 #endif
-#line 21 "Tocken_count.l"
+#line 27 "tocken_count.l"
 
 
 int main(){
+    yyin = fopen("lexer_in.c","r");
+    if(!yyin){
+        printf("File Not Found!\n");
+        return 1;
+    }
     yylex();
     printf("\n=== Token count Summary ===\n");
     printf("keyword:    = %d\n",keyw);
