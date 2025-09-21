@@ -21,7 +21,7 @@
     printf("Constant (Number): %s\n", yytext); cons++; 
 }
 
-\'([^\'\n])\'{
+\'([^\'\n'])\'{
     printf("Constant (char): %s\n", yytext);
     cons++;
 }
@@ -60,6 +60,10 @@ int main(){
     printf("keyword:    = %d\n",keyw);
     printf("identifier: = %d\n",ident);
     printf("Constant:   = %d\n",cons);
+    printf("Operator:   = %d\n",oprtot);
+    printf("separetor:  = %d\n",sepra);
+    printf("Special Char:  = %d\n",spchar);
+
     return 0;
 }
 
