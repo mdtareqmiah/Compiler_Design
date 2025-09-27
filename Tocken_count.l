@@ -1,6 +1,6 @@
 %{
     #include<stdio.h>
-    int keyw=0, ident=0, oprtot=0, sepra=0, spchr=0,cons=0;
+    int keyw=0, ident=0, oprtor=0, sepra=0, spchr=0,cons=0;
 
 %}
 
@@ -9,39 +9,22 @@
 "//".*  ;
 "/*"([^*]|\*+[^*/])*"*/"    ;
 
-("int"|"float"|"char"|"if"|"else"|"while"|"for"|"return"|"void"|"printf") { 
-    printf("keyword: %s\n", yytext); keyw++; 
-}
+("int"|"float"|"char"|"if"|"else"|"while"|"for"|"return"|"void"|"printf") {     printf("keyword: %s\n", yytext); keyw++; }
 
 [a-zA-Z_][a-zA-Z0-9_]* { 
     printf("identifier: %s\n", yytext); ident++; 
 }
 
-[0-9]+(\.[0-9]+)? { 
-    printf("Constant (Number): %s\n", yytext); cons++; 
-}
+[0-9]+(\.[0-9]+)? {     printf("Constant (Number): %s\n", yytext); cons++; }
 
-\'([^\'\n'])\'{
-    printf("Constant (char): %s\n", yytext);
-    cons++;
-}
-\"([^\"\n]*\"){
-    printf("Constant(string): %s\n",yytext);
-    cons++;
-}
+"\'([^\'\n])\'" {     printf("Constant (char): %s\n", yytext);    cons++;}
+\"([^\"\\\n]|\\.)*\"  {    printf("Constant(string): %s\n",yytext);    cons++;}
 
-(\+|\-|\*|/|=|==|!=|<=|>=|<|>|\+\+|\-\-) {
-    printf("Operator: %s\n",yytext); oprtor++;
-}
+"(++|--|+|-|\*|/|==|!=|<=|>=|=|<|>)"  {    printf("Operator: %s\n",yytext); oprtor++; }
 
-[;,:\.] {
-    printf("Separator: %s\n", yytext);
-    sepra++;
-}
+[;,:\.] {    printf("Separator: %s\n", yytext);    sepra++;}
 
-[\(\)\{\}\[\]] {
-    printf("Special Char: %s\n", yytext); spchar++;
-}
+[\(\)\{\}\[\]] {    printf("Special Char: %s\n", yytext); spchr++;}
 
 
 [ \t\n]+    ;
@@ -50,7 +33,7 @@
 %%
 
 int main(){
-    yyin = fopen("lexer_in.c","r");
+    yyin = fopen("lexer_inp.c","r");
     if(!yyin){
         printf("File Not Found!\n");
         return 1;
@@ -60,9 +43,9 @@ int main(){
     printf("keyword:    = %d\n",keyw);
     printf("identifier: = %d\n",ident);
     printf("Constant:   = %d\n",cons);
-    printf("Operator:   = %d\n",oprtot);
+    printf("Operator:   = %d\n",oprtor);
     printf("separetor:  = %d\n",sepra);
-    printf("Special Char:  = %d\n",spchar);
+    printf("Special Char:  = %d\n",spchr);
 
     return 0;
 }
